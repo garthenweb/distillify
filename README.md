@@ -1,4 +1,4 @@
-# Distillify
+# Distillify [![build status][1]][2]
 
 A browserify plugin that splits your bundle into separate files.
 
@@ -50,3 +50,6 @@ Distillify allows you to
 ## License
 
 Licensed under the [MIT License](https://opensource.org/licenses/mit-license.php).
+
+[1]: https://travis-ci.org/garthenweb/distillify.svg
+[2]: https://travis-ci.org/garthenweb/distillify
