@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const crypto = require('crypto');
 
 const pack = require('browser-pack')({ raw: true, hasExports: true });
 const minimatch = require('minimatch');
@@ -14,30 +13,42 @@ function shouldExternalize(file, externalizePattern) {
   return minimatch(unixFilePath, externalizePattern);
 }
 
-function hash(value) {
-  return crypto.createHash('md5').update(value).digest('hex');
-}
-
 const distillify = (b, opts) => {
   const outputFile = opts.outputs.file;
   const externalizePattern = opts.outputs.pattern;
 
   const deps = through.obj();
   const depMap = new Map();
+
+  let uniqueId = 0;
+  const idMap = new Map();
+
+  const createIdsForDeps = deps => Object.keys(deps).reduce(
+    (rowDeps, name) => {
+      const id = createId(rowDeps[name]);
+      depMap.set(name, id)
+      rowDeps[name] = id;
+      return rowDeps;
+    },
+    deps
+  );
+
+  function createId(value) {
+    if (!idMap.has(value)) {
+      idMap.set(value, ++uniqueId);
+    }
+    return idMap.get(value);
+  }
+
   b.pipeline.get('deps').push(through.obj(
     function(row, enc, next) {
       const { file } = row;
+      // store external dependency paths
+      row.id = createId(row.file);
+      row.deps = createIdsForDeps(row.deps);
       if (shouldExternalize(file, externalizePattern)) {
-        row.id = hash(row.file);
         deps.push(row);
       } else {
-        // store external dependency paths
-        Object.keys(row.deps).forEach(name => {
-          const path = row.deps[name];
-          if (shouldExternalize(path, externalizePattern)) {
-            depMap.set(name, hash(path));
-          }
-        });
         this.push(row);
       }
 
