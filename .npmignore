@@ -1,0 +1,4 @@
+src/
+tests/
+.nyc_output/
+example/

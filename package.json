@@ -1,0 +1,38 @@
+{
+  "name": "distillify",
+  "version": "0.0.0",
+  "description": "Browserify plugin that splits your bundle into seperate files",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./tests/build.js"
+  },
+  "keywords": [
+    "browser-pack",
+    "browserify",
+    "browserify-plugin",
+    "browserify-tool",
+    "bundle",
+    "vendor"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/garthenweb/distillify"
+  },
+  "author": "Jannick Garthen <jannick.garthen@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^13.0.1",
+    "object-assign": "^4.1.0"
+  },
+  "dependencies": {
+    "browser-pack": "^6.0.1",
+    "minimatch": "^3.0.0",
+    "through2": "^2.0.1"
+  },
+  "bugs": {
+    "url": "https://github.com/garthenweb/distillify/issues"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}
