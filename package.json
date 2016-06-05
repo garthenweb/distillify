@@ -1,7 +1,7 @@
 {
   "name": "distillify",
   "version": "0.0.0",
-  "description": "Browserify plugin that splits your bundle into seperate files",
+  "description": "Browserify plugin that splits your bundle into separate files",
   "main": "index.js",
   "scripts": {
     "test": "node ./tests/build.js"
